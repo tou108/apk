@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#3F3F3F</color>
+    <color name="colorPrimaryDark">#1A1A1A</color>
+    <color name="colorAccent">#FF8800</color>
+    <color name="statusBar">#1A1A1A</color>
+    <color name="windowBackground">#F5F5F5</color>
 
-    <!-- MH4Gシミュレーター用カラー -->
-    <color name="tab_background">#3F51B5</color>
-    <color name="tab_text">#B0BEC5</color>
-    <color name="tab_selected_text">#FFFFFF</color>
-    <color name="tab_indicator">#FF9800</color>
-    <color name="status_bar">#303F9F</color>
+    <!-- 除外色 -->
+    <color name="excludedBg">#FAFAFA</color>
+    <color name="excludedText">#AAAAAA</color>
+
+    <!-- 固定色 -->
+    <color name="pinnedBg">#FFF3E0</color>
+
+    <!-- 発動スキル色 -->
+    <color name="targetSkillColor">#1565C0</color>
+    <color name="minusSkillColor">#B71C1C</color>
+
+    <!-- 行背景 -->
+    <color name="rowEven">#FFFFFF</color>
+    <color name="rowOdd">#F0F0F0</color>
 </resources>

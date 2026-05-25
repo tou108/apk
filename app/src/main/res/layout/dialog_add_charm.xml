@@ -1,93 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="お守り種類"
-        android:textSize="12sp" />
-
-    <Spinner
-        android:id="@+id/spinnerCharmType"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="スロット数"
-        android:textSize="12sp"
-        android:paddingTop="8dp" />
-
-    <Spinner
-        android:id="@+id/spinnerCharmSlot"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="8dp">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <!-- お守り種類 -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:text="お守り種類"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+        <Spinner
+            android:id="@+id/spinnerCharmType"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="スキル系統1"
-                android:textSize="12sp" />
+        <!-- スロット数 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="スロット数"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+        <Spinner
+            android:id="@+id/spinnerCharmSlot"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginBottom="10dp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- スキル1 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="スキル系統①"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
             <Spinner
                 android:id="@+id/spinnerSkill1System"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"/>
             <EditText
                 android:id="@+id/etSkill1Point"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="ポイント"
-                android:inputType="numberSigned"
+                android:layout_width="56dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
+                android:hint="Pt"
                 android:textSize="13sp"
-                android:singleLine="true" />
+                android:inputType="numberSigned"
+                android:gravity="center"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <!-- スキル2 -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="8dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="スキル系統2"
-                android:textSize="12sp" />
-
+            android:text="スキル系統②"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Spinner
                 android:id="@+id/spinnerSkill2System"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"/>
             <EditText
                 android:id="@+id/etSkill2Point"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:hint="ポイント"
-                android:inputType="numberSigned"
+                android:layout_width="56dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
+                android:hint="Pt"
                 android:textSize="13sp"
-                android:singleLine="true" />
+                android:inputType="numberSigned"
+                android:gravity="center"/>
         </LinearLayout>
-    </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

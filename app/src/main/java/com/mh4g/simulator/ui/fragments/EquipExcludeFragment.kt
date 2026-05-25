@@ -108,24 +108,7 @@ class EquipExcludeFragment : Fragment() {
     }
 
     private fun showEquipInfo(equip: Equipment) {
-        val sb = StringBuilder()
-        sb.appendLine("【${equip.name}】")
-        sb.appendLine("スロット: ${equip.slotStr()}")
-        sb.appendLine("防御力: ${equip.defBase} → ${equip.defMax}")
-        sb.appendLine("火:${equip.resFire} 水:${equip.resWater} 雷:${equip.resThunder} 氷:${equip.resIce} 龍:${equip.resDragon}")
-        sb.appendLine("スキル:")
-        for ((sys, pt) in equip.skillPoints) {
-            sb.appendLine("  $sys ${if (pt >= 0) "+$pt" else "$pt"}")
-        }
-        if (equip.materials.isNotEmpty()) {
-            sb.appendLine("素材:")
-            for ((mat, cnt) in equip.materials) sb.appendLine("  $mat×$cnt")
-        }
-        android.app.AlertDialog.Builder(requireContext())
-            .setTitle(equip.name)
-            .setMessage(sb.toString())
-            .setPositiveButton("閉じる", null)
-            .show()
+        com.mh4g.simulator.ui.dialogs.EquipInfoDialog.show(this, equip)
     }
 
     private fun filterList() {

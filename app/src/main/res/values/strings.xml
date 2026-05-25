@@ -2,15 +2,23 @@
 <resources>
     <string name="app_name">MH4G願シミュレーター</string>
 
+    <!-- ジェンダー -->
     <string-array name="gender_options">
         <item>両方</item>
         <item>男</item>
         <item>女</item>
     </string-array>
 
+    <!-- タイプ -->
     <string-array name="type_options">
         <item>両方</item>
         <item>剣士</item>
         <item>ガンナー</item>
+    </string-array>
+
+    <!-- ランク -->
+    <string-array name="rank_type_options">
+        <item>集会所☆</item>
+        <item>村☆</item>
     </string-array>
 </resources>

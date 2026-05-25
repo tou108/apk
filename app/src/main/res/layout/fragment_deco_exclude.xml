@@ -3,25 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:background="#F5F5F5">
 
-    <EditText
-        android:id="@+id/searchBox"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:hint="名前・スキルで検索..."
-        android:textSize="13sp"
-        android:inputType="text"
-        android:imeOptions="actionSearch"
-        android:singleLine="true"
-        android:paddingBottom="4dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:background="#EEEEEE">
+
+        <EditText
+            android:id="@+id/searchBox"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:hint="名前・スキルで絞り込み"
+            android:textSize="12sp"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:background="@android:drawable/edit_text"
+            android:paddingStart="6dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="タップ: 除外切替  長押し: 詳細情報"
+        android:textSize="10sp"
+        android:textColor="#795548"
+        android:background="#FFF8E1"
+        android:padding="4dp"/>
 
     <ListView
         android:id="@+id/decoList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#FFFFFF"
         android:divider="#DDDDDD"
-        android:dividerHeight="1dp" />
-
+        android:dividerHeight="1dp"
+        android:fastScrollEnabled="true"/>
 </LinearLayout>

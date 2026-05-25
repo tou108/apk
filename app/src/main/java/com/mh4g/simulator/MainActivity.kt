@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 AppData.initialize(applicationContext)
+                // 永続化データ読み込み
+                com.mh4g.simulator.data.PreferenceManager.loadUserCharms(applicationContext)
+                com.mh4g.simulator.data.PreferenceManager.loadExcludeState(applicationContext)
+                com.mh4g.simulator.data.PreferenceManager.loadMySetList(applicationContext)
             }
             loadingBar.visibility = View.GONE
             loadingText.visibility = View.GONE
@@ -50,6 +54,14 @@ class MainActivity : AppCompatActivity() {
             tabLayout.visibility = View.VISIBLE
             setupTabs()
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // 永続化
+        com.mh4g.simulator.data.PreferenceManager.saveUserCharms(this)
+        com.mh4g.simulator.data.PreferenceManager.saveExcludeState(this)
+        com.mh4g.simulator.data.PreferenceManager.saveMySetList(this)
     }
 
     private fun setupTabs() {

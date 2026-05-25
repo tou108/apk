@@ -3,231 +3,300 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:background="#F5F5F5">
 
-    <!-- 検索条件エリア -->
-    <ScrollView
+    <!-- 上部：検索条件パネル（PC版左上エリア） -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="0.45"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- スキル選択エリア -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="スキル選択"
+            android:textSize="11sp"
+            android:textColor="#FFFFFF"
+            android:background="#555555"
+            android:paddingStart="6dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"/>
 
-            <!-- スキル選択 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="【発動させたいスキル】"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:paddingTop="4dp"
-                android:paddingBottom="2dp" />
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <LinearLayout
                 android:id="@+id/skillSelectionContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:minHeight="36dp" />
+                android:flexDirection="row"
+                android:flexWrap="wrap"
+                android:padding="4dp"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnAddSkill"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:text="＋スキル選択"
+            android:textSize="12sp"
+            android:backgroundTint="#607D8B"
+            android:textColor="#FFFFFF"/>
+
+        <!-- 条件行1：性別・タイプ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性別:"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:paddingEnd="2dp"/>
+            <Spinner
+                android:id="@+id/spinnerGender"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" タイプ:"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:paddingEnd="2dp"/>
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- 条件行2：武器スロ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="武器スロ・装飾品指定:"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:paddingEnd="2dp"/>
+            <Spinner
+                android:id="@+id/spinnerWeaponSlot"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- チェックボックス行 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <CheckBox
+                android:id="@+id/cbUseExclude"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="除外・固定を使う"
+                android:textSize="11sp"/>
+
+            <CheckBox
+                android:id="@+id/cbSearchCharm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="お守り検索"
+                android:textSize="11sp"/>
+        </LinearLayout>
+
+        <!-- 検索ボタン -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <Button
-                android:id="@+id/btnAddSkill"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="スキル追加"
-                android:textSize="12sp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp" />
+                android:id="@+id/btnSearch"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="検索"
+                android:textSize="14sp"
+                android:backgroundTint="#1976D2"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="4dp"/>
 
-            <!-- 各種条件 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="4dp">
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="停止"
+                android:textSize="14sp"
+                android:backgroundTint="#C62828"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="性別:"
-                    android:textSize="12sp"
-                    android:gravity="center_vertical"
-                    android:layout_marginEnd="4dp" />
-
-                <Spinner
-                    android:id="@+id/spinnerGender"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  種別:"
-                    android:textSize="12sp"
-                    android:gravity="center_vertical"
-                    android:layout_marginEnd="4dp" />
-
-                <Spinner
-                    android:id="@+id/spinnerType"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  武器スロ:"
-                    android:textSize="12sp"
-                    android:gravity="center_vertical"
-                    android:layout_marginEnd="4dp" />
-
-                <Spinner
-                    android:id="@+id/spinnerWeaponSlot"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="4dp">
-
-                <CheckBox
-                    android:id="@+id/cbUseExclude"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="除外・固定を使う"
-                    android:textSize="12sp"
-                    android:checked="true" />
-
-                <CheckBox
-                    android:id="@+id/cbSearchCharm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="お守り検索"
-                    android:textSize="12sp"
-                    android:checked="true"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-
-            <!-- 検索ボタン -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="4dp">
-
-                <Button
-                    android:id="@+id/btnSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="検　索"
-                    android:textSize="14sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-
-                <Button
-                    android:id="@+id/btnStop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="中　止"
-                    android:textSize="14sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:layout_marginStart="8dp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tvResultCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="13sp"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-
+        <!-- プログレスバー＋件数 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="8dp"
+                android:layout_weight="1"
                 android:max="100"
-                android:visibility="gone" />
-
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tvResultCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0件"
+                android:textSize="12sp"
+                android:paddingStart="4dp"/>
         </LinearLayout>
-    </ScrollView>
 
-    <!-- 仕切り線 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC" />
-
-    <!-- 検索ログ -->
-    <TextView
-        android:id="@+id/resultLogView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="12sp"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:background="#F8F8F8" />
-
-    <!-- 結果リスト -->
-    <ListView
-        android:id="@+id/resultTable"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:divider="#DDDDDD"
-        android:dividerHeight="1dp" />
-
-    <!-- 仕切り線 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#AAAAAA" />
-
-    <!-- 詳細表示 -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
-
-        <TextView
-            android:id="@+id/resultDetailView"
+        <!-- ログ表示 -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="12sp"
-            android:fontFamily="monospace"
-            android:padding="6dp"
-            android:background="#FFFEF0" />
-    </ScrollView>
+            android:layout_height="52dp"
+            android:background="#FFFDE7">
+            <TextView
+                android:id="@+id/resultLogView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="11sp"
+                android:padding="4dp"
+                android:fontFamily="monospace"/>
+        </ScrollView>
+    </LinearLayout>
 
-    <!-- 空きスロットパターン -->
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="【空きスロット活用候補】"
-        android:textSize="11sp"
-        android:textStyle="bold"
-        android:paddingStart="4dp"
-        android:background="#E8E8E8" />
+        android:layout_height="2dp"
+        android:background="#CCCCCC"/>
 
-    <ListView
-        android:id="@+id/emptySlotTable"
+    <!-- 下部：検索結果エリア（PC版右側・下部） -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:divider="#DDDDDD"
-        android:dividerHeight="1dp" />
+        android:layout_weight="0.55"
+        android:orientation="horizontal">
 
+        <!-- 左：結果一覧 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="検索結果"
+                android:textSize="11sp"
+                android:textColor="#FFFFFF"
+                android:background="#555555"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+            <ListView
+                android:id="@+id/resultTable"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:divider="#DDDDDD"
+                android:dividerHeight="1dp"
+                android:fastScrollEnabled="true"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#CCCCCC"/>
+
+        <!-- 右：詳細＋空きスロット -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="詳細情報"
+                android:textSize="11sp"
+                android:textColor="#FFFFFF"
+                android:background="#555555"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.6"
+                android:background="#FFFFFF">
+                <TextView
+                    android:id="@+id/resultDetailView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:padding="4dp"
+                    android:fontFamily="monospace"/>
+            </ScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CCCCCC"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="空きスロット活用"
+                android:textSize="11sp"
+                android:textColor="#FFFFFF"
+                android:background="#555555"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+            <ListView
+                android:id="@+id/emptySlotTable"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:background="#FAFAFA"
+                android:divider="#DDDDDD"
+                android:dividerHeight="1dp"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

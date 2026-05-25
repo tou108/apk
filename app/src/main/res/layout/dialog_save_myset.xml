@@ -6,34 +6,30 @@
     android:padding="16dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="セット名"
-        android:textSize="12sp" />
-
+        android:textSize="12sp"
+        android:textColor="#555555"/>
     <EditText
         android:id="@+id/etLabel"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="セット名を入力"
-        android:textSize="14sp"
+        android:layout_height="44dp"
+        android:textSize="13sp"
         android:inputType="text"
-        android:singleLine="true" />
+        android:layout_marginBottom="12dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="メモ"
+        android:text="メモ（任意）"
         android:textSize="12sp"
-        android:paddingTop="8dp" />
-
+        android:textColor="#555555"/>
     <EditText
         android:id="@+id/etNote"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:hint="メモを入力（任意）"
         android:textSize="13sp"
         android:inputType="textMultiLine"
-        android:gravity="top" />
-
+        android:gravity="top"/>
 </LinearLayout>

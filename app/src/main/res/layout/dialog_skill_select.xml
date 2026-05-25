@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 絞り込み -->
+    <EditText
+        android:id="@+id/etSkillFilter"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:hint="スキル名・系統名で絞り込み"
+        android:textSize="13sp"
+        android:inputType="text"
+        android:background="@android:drawable/edit_text"
+        android:paddingStart="8dp"
+        android:margin="6dp"/>
+
+    <!-- スキルリスト -->
+    <ListView
+        android:id="@+id/skillListView"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="#FFFFFF"
+        android:divider="#EEEEEE"
+        android:dividerHeight="1dp"/>
+</LinearLayout>

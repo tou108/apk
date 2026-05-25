@@ -235,17 +235,23 @@ class SearchFragment : Fragment() {
         super.onCreateContextMenu(menu, v, menuInfo)
         if (v.id == R.id.resultTable) {
             menu.setHeaderTitle("操作")
-            menu.add(0, MENU_ADD_MYSET, 0, "マイセットに追加する")
-            menu.add(0, MENU_EXCLUDE_HEAD, 1, "頭装備を除外する")
-            menu.add(0, MENU_EXCLUDE_BODY, 2, "胴装備を除外する")
-            menu.add(0, MENU_EXCLUDE_ARM,  3, "腕装備を除外する")
-            menu.add(0, MENU_EXCLUDE_WST,  4, "腰装備を除外する")
-            menu.add(0, MENU_EXCLUDE_LEG,  5, "脚装備を除外する")
-            menu.add(0, MENU_PIN_HEAD, 6, "頭装備を固定する")
-            menu.add(0, MENU_PIN_BODY, 7, "胴装備を固定する")
-            menu.add(0, MENU_PIN_ARM,  8, "腕装備を固定する")
-            menu.add(0, MENU_PIN_WST,  9, "腰装備を固定する")
-            menu.add(0, MENU_PIN_LEG,  10, "脚装備を固定する")
+            menu.add(0, MENU_ADD_MYSET,    0, "マイセットに追加する")
+            menu.add(0, MENU_SHOW_SKILLPT, 1, "スキルポイントを表示する")
+            menu.add(0, MENU_EXCLUDE_HEAD, 2, "頭装備を除外する")
+            menu.add(0, MENU_EXCLUDE_BODY, 3, "胴装備を除外する")
+            menu.add(0, MENU_EXCLUDE_ARM,  4, "腕装備を除外する")
+            menu.add(0, MENU_EXCLUDE_WST,  5, "腰装備を除外する")
+            menu.add(0, MENU_EXCLUDE_LEG,  6, "脚装備を除外する")
+            menu.add(0, MENU_PIN_HEAD,     7, "頭装備を固定する")
+            menu.add(0, MENU_PIN_BODY,     8, "胴装備を固定する")
+            menu.add(0, MENU_PIN_ARM,      9, "腕装備を固定する")
+            menu.add(0, MENU_PIN_WST,     10, "腰装備を固定する")
+            menu.add(0, MENU_PIN_LEG,     11, "脚装備を固定する")
+            menu.add(0, MENU_INFO_HEAD,   12, "頭装備の情報を見る")
+            menu.add(0, MENU_INFO_BODY,   13, "胴装備の情報を見る")
+            menu.add(0, MENU_INFO_ARM,    14, "腕装備の情報を見る")
+            menu.add(0, MENU_INFO_WST,    15, "腰装備の情報を見る")
+            menu.add(0, MENU_INFO_LEG,    16, "脚装備の情報を見る")
         }
     }
 
@@ -253,72 +259,152 @@ class SearchFragment : Fragment() {
         val info = item.menuInfo as? AdapterView.AdapterContextMenuInfo ?: return false
         val result = if (info.position < searchResults.size) searchResults[info.position] else return false
         when (item.itemId) {
-            MENU_ADD_MYSET -> addToMySet(result)
+            MENU_ADD_MYSET    -> addToMySet(result)
+            MENU_SHOW_SKILLPT -> com.mh4g.simulator.ui.dialogs.SkillPointTableDialog.show(this, result)
             MENU_EXCLUDE_HEAD -> result.head?.let { AppData.toggleExclude(it) }
             MENU_EXCLUDE_BODY -> result.body?.let { AppData.toggleExclude(it) }
             MENU_EXCLUDE_ARM  -> result.arm?.let { AppData.toggleExclude(it) }
             MENU_EXCLUDE_WST  -> result.wst?.let { AppData.toggleExclude(it) }
             MENU_EXCLUDE_LEG  -> result.leg?.let { AppData.toggleExclude(it) }
-            MENU_PIN_HEAD -> result.head?.let { AppData.pinEquip(it) }
-            MENU_PIN_BODY -> result.body?.let { AppData.pinEquip(it) }
-            MENU_PIN_ARM  -> result.arm?.let { AppData.pinEquip(it) }
-            MENU_PIN_WST  -> result.wst?.let { AppData.pinEquip(it) }
-            MENU_PIN_LEG  -> result.leg?.let { AppData.pinEquip(it) }
+            MENU_PIN_HEAD     -> result.head?.let { AppData.pinEquip(it) }
+            MENU_PIN_BODY     -> result.body?.let { AppData.pinEquip(it) }
+            MENU_PIN_ARM      -> result.arm?.let { AppData.pinEquip(it) }
+            MENU_PIN_WST      -> result.wst?.let { AppData.pinEquip(it) }
+            MENU_PIN_LEG      -> result.leg?.let { AppData.pinEquip(it) }
+            MENU_INFO_HEAD    -> result.head?.let { com.mh4g.simulator.ui.dialogs.EquipInfoDialog.show(this, it) }
+            MENU_INFO_BODY    -> result.body?.let { com.mh4g.simulator.ui.dialogs.EquipInfoDialog.show(this, it) }
+            MENU_INFO_ARM     -> result.arm?.let { com.mh4g.simulator.ui.dialogs.EquipInfoDialog.show(this, it) }
+            MENU_INFO_WST     -> result.wst?.let { com.mh4g.simulator.ui.dialogs.EquipInfoDialog.show(this, it) }
+            MENU_INFO_LEG     -> result.leg?.let { com.mh4g.simulator.ui.dialogs.EquipInfoDialog.show(this, it) }
         }
         return true
     }
 
     private fun startSearch() {
+        val targets = selectedSkills.filter { !it.startsWith("-") }
+        val excludes = selectedSkills.filter { it.startsWith("-") }.map { it.drop(1) }
+
+        if (targets.isEmpty()) {
+            Toast.makeText(context, "発動スキルを1つ以上選択してください", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val cond = SearchCondition(
-            gender = spinnerGender.selectedItemPosition,
-            armorType = spinnerType.selectedItemPosition,
-            weaponSlotAuto = spinnerWeaponSlot.selectedItemPosition == 0,
-            weaponSlot = if (spinnerWeaponSlot.selectedItemPosition == 0) -1
-                else spinnerWeaponSlot.selectedItemPosition - 1,
-            targetSkills = selectedSkills.filter { !it.startsWith("-") },
-            excludeSkills = selectedSkills.filter { it.startsWith("-") }.map { it.drop(1) } +
-                    excludeSkills,
-            useExclude = cbUseExclude.isChecked,
-            searchCharm = cbSearchCharm.isChecked,
-            useCharms = AppData.userCharms.getAll().isNotEmpty()
+            gender          = spinnerGender.selectedItemPosition,
+            armorType       = spinnerType.selectedItemPosition,
+            weaponSlotAuto  = currentWeaponSlot < 0,
+            weaponSlot      = currentWeaponSlot,
+            targetSkills    = targets,
+            excludeSkills   = excludes,
+            decoSpecs       = currentDecoSpecs,
+            useExclude      = cbUseExclude.isChecked,
+            searchCharm     = cbSearchCharm.isChecked,
+            useCharms       = AppData.userCharms.getAll().isNotEmpty()
         )
         viewModel.updateCondition(cond)
         viewModel.startSearch()
     }
 
     private fun showSkillSelectionDialog() {
-        val skills = AppData.skills.map { it.name }.toTypedArray()
-        var selected = -1
+        val dialogView = layoutInflater.inflate(R.layout.dialog_skill_select, null)
+        val filterEdit = dialogView.findViewById<android.widget.EditText>(R.id.etSkillFilter)
+        val listView   = dialogView.findViewById<android.widget.ListView>(R.id.skillListView)
+
+        // 系統名→スキル名（発動スキルのみ。point>0のもの）
+        val allSkillNames = AppData.skills
+            .filter { it.point > 0 }
+            .map { it.name }
+            .distinct()
+            .sorted()
+
+        var filteredSkills = allSkillNames.toMutableList()
+        var selectedSkillName: String? = null
+
+        val listAdapter = android.widget.ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_single_choice,
+            filteredSkills
+        )
+        listView.adapter = listAdapter
+        listView.choiceMode = android.widget.ListView.CHOICE_MODE_SINGLE
+        listView.setOnItemClickListener { _, _, pos, _ ->
+            selectedSkillName = filteredSkills[pos]
+        }
+
+        filterEdit.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {}
+            override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {
+                val query = s.toString()
+                filteredSkills = allSkillNames.filter {
+                    query.isEmpty() || it.contains(query) ||
+                    (AppData.skillByName[it]?.system?.contains(query) == true)
+                }.toMutableList()
+                listAdapter.clear()
+                listAdapter.addAll(filteredSkills)
+                listAdapter.notifyDataSetChanged()
+                selectedSkillName = null
+            }
+        })
+
         AlertDialog.Builder(requireContext())
             .setTitle("スキル選択")
-            .setSingleChoiceItems(skills, -1) { _, which -> selected = which }
-            .setPositiveButton("追加（発動）") { _, _ ->
-                if (selected >= 0) {
-                    addSkillChip(skills[selected], false)
-                }
+            .setView(dialogView)
+            .setPositiveButton("発動スキルに追加") { _, _ ->
+                selectedSkillName?.let { addSkillChip(it, false) }
             }
-            .setNeutralButton("追加（除外）") { _, _ ->
-                if (selected >= 0) {
-                    addSkillChip(skills[selected], true)
-                }
+            .setNeutralButton("除外スキルに追加") { _, _ ->
+                selectedSkillName?.let { addSkillChip(it, true) }
             }
             .setNegativeButton("キャンセル", null)
             .show()
     }
 
     private fun addSkillChip(skillName: String, exclude: Boolean) {
-        val displayName = if (exclude) "-$skillName" else skillName
-        if (selectedSkills.contains(displayName)) return
-        selectedSkills.add(displayName)
+        val displayName = if (exclude) "[-]$skillName" else skillName
+        val internalName = if (exclude) "-$skillName" else skillName
+        if (selectedSkills.contains(internalName)) return
+        selectedSkills.add(internalName)
 
-        val chip = Button(requireContext())
+        val chip = android.widget.Button(requireContext())
         chip.text = displayName
-        chip.textSize = 12f
+        chip.textSize = 11f
+        chip.setPadding(12, 4, 12, 4)
+        val bg = if (exclude) 0xFFB71C1C.toInt() else 0xFF1565C0.toInt()
+        chip.setBackgroundColor(bg)
+        chip.setTextColor(android.graphics.Color.WHITE)
         chip.setOnClickListener {
-            selectedSkills.remove(displayName)
+            selectedSkills.remove(internalName)
             skillSelectionContainer.removeView(chip)
         }
-        skillSelectionContainer.addView(chip)
+
+        val lp = android.widget.LinearLayout.LayoutParams(
+            android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+            android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply { setMargins(4, 4, 4, 4) }
+        skillSelectionContainer.addView(chip, lp)
+    }
+
+    // 武器スロット・装飾品直接指定の状態
+    private var currentWeaponSlot: Int = -1
+    private var currentDecoSpecs: List<com.mh4g.simulator.search.DecoSpec> = emptyList()
+
+    private fun showWeaponDecoDialog() {
+        com.mh4g.simulator.ui.dialogs.WeaponDecoDialog(
+            currentWeaponSlot, currentDecoSpecs
+        ) { weapSlot, specs ->
+            currentWeaponSlot = weapSlot
+            currentDecoSpecs = specs
+            val slotText = if (weapSlot < 0) "自動" else "武器スロ$weapSlot"
+            val decoText = if (specs.isEmpty()) "" else
+                "  装飾品${specs.size}個指定"
+            spinnerWeaponSlot.let { sp ->
+                (sp.adapter as? android.widget.ArrayAdapter<*>)?.let { a ->
+                    // 表示更新用
+                }
+            }
+            Toast.makeText(context, "$slotText$decoText を設定しました", Toast.LENGTH_SHORT).show()
+        }.show(parentFragmentManager, "WeaponDeco")
     }
 
     private fun addToMySet(result: SearchResult) {
@@ -344,16 +430,22 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
-        private const val MENU_ADD_MYSET = 1
-        private const val MENU_EXCLUDE_HEAD = 2
-        private const val MENU_EXCLUDE_BODY = 3
-        private const val MENU_EXCLUDE_ARM = 4
-        private const val MENU_EXCLUDE_WST = 5
-        private const val MENU_EXCLUDE_LEG = 6
-        private const val MENU_PIN_HEAD = 7
-        private const val MENU_PIN_BODY = 8
-        private const val MENU_PIN_ARM = 9
-        private const val MENU_PIN_WST = 10
-        private const val MENU_PIN_LEG = 11
+        private const val MENU_ADD_MYSET    = 1
+        private const val MENU_SHOW_SKILLPT = 2
+        private const val MENU_EXCLUDE_HEAD = 3
+        private const val MENU_EXCLUDE_BODY = 4
+        private const val MENU_EXCLUDE_ARM  = 5
+        private const val MENU_EXCLUDE_WST  = 6
+        private const val MENU_EXCLUDE_LEG  = 7
+        private const val MENU_PIN_HEAD     = 8
+        private const val MENU_PIN_BODY     = 9
+        private const val MENU_PIN_ARM      = 10
+        private const val MENU_PIN_WST      = 11
+        private const val MENU_PIN_LEG      = 12
+        private const val MENU_INFO_HEAD    = 13
+        private const val MENU_INFO_BODY    = 14
+        private const val MENU_INFO_ARM     = 15
+        private const val MENU_INFO_WST     = 16
+        private const val MENU_INFO_LEG     = 17
     }
 }
