@@ -33,8 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:flexDirection="row"
-                android:flexWrap="wrap"
                 android:padding="4dp"/>
         </ScrollView>
 

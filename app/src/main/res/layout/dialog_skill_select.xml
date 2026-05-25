@@ -14,7 +14,7 @@
         android:inputType="text"
         android:background="@android:drawable/edit_text"
         android:paddingStart="8dp"
-        android:margin="6dp"/>
+        android:layout_margin="6dp"/>
 
     <!-- スキルリスト -->
     <ListView
