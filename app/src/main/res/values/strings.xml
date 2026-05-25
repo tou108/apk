@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MH4G願シミュレーター</string>
+
+    <string-array name="gender_options">
+        <item>両方</item>
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="type_options">
+        <item>両方</item>
+        <item>剣士</item>
+        <item>ガンナー</item>
+    </string-array>
+</resources>
