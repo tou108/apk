@@ -115,7 +115,7 @@ data class Charm(
         val sb = StringBuilder(typeName)
         if (skillPoints.isNotEmpty()) {
             sb.append(" [")
-            sb.append(skillPoints.joinToString(",") { "${it.first}${it.second:+d}" })
+            sb.append(skillPoints.joinToString(",") { "${it.first}${if (it.second >= 0) "+${it.second}" else "${it.second}"}" })
             sb.append("]")
         }
         if (slotCount > 0) sb.append(" ${slotStr()}")
